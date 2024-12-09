@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Logo Showcase with Definitions</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #1e3c72);
+            background-size: 400% 400%;
+            animation: backgroundMove 10s infinite;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-size: 3em;
+            text-shadow: 0 0 10px #fff, 0 0 20px cyan, 0 0 30px magenta;
+            animation: glow 3s infinite alternate;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .card {
+            perspective: 1000px;
+            margin: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card-inner {
+            width: 200px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.6s, box-shadow 0.3s;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        .card-inner:hover {
+            transform: rotateY(180deg) scale(1.1);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 200% 200%;
+            animation: gradientShift 4s infinite;
+            position: relative;
+        }
+
+        .card-back {
+            background: #333;
+            transform: rotateY(180deg);
+        }
+
+        .card img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px #fff);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 0 0 5px cyan, 0 0 10px magenta;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            max-width: 800px;
+            background: #222;
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: cyan;
+        }
+
+        .modal p {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .modal button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: cyan;
+            border: none;
+            color: #222;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+        }
+
+        .modal button:hover {
+            background: magenta;
+            color: #fff;
+        }
+
+        /* Background overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            z-index: 999;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>3D Animated Logo Showcase</h1>
+    <div class="container">
+        <!-- BookMyShow Card -->
+        <div class="card" data-app="bookmyshow">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://envs.sh/1Rq.jpg" alt="BookMyShow Logo">
+                    <h3>BookMyShow</h3>
+                </div>
+                <div class="card-back">
+                    <p>Click to learn more about BookMyShow.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Twitter Card -->
+        <div class="card" data-app="twitter">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://envs.sh/1R0.jpg" alt="Twitter Logo">
+                    <h3>Twitter</h3>
+                </div>
+                <div class="card-back">
+                    <p>Click to learn more about Twitter.</p>
+                </div>
+            </div>
+        </div>
+        <!-- YouTube Card -->
+        <div class="card" data-app="youtube">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/YouTube_icon_%282013-2017%29.png/800px-YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+                    <h3>YouTube</h3>
+                </div>
+                <div class="card-back">
+                    <p>Click to learn more about YouTube.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Google Maps Card -->
+        <div class="card" data-app="googlemaps">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://envs.sh/1RS.jpg" alt="Google Maps Logo">
+                    <h3>Google Maps</h3>
+                </div>
+                <div class="card-back">
+                    <p>Click to learn more about Google Maps.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="overlay"></div>
+    <div class="modal">
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        const descriptions = {
+            bookmyshow: "BookMyShow is a platform for booking tickets for movies, events, concerts, and live shows. With a user-friendly interface, it provides recommendations, reviews, and an effortless booking experience. Whether you're planning a family outing, a concert visit, or an adventure, BookMyShow ensures a hassle-free experience. It also offers exclusive offers, loyalty rewards, and last-minute bookings to cater to all your entertainment needs.",
+            twitter: "Twitter is a social media platform designed for real-time communication and trend tracking. With a limit of 280 characters, it encourages users to share concise updates, thoughts, and news. From political movements to global trends, Twitter connects people worldwide through hashtags, mentions, and live tweets.",
+            youtube: "YouTube is the world’s largest video-sharing platform where users can upload, view, and share videos. It offers a vast range of content, from entertainment and education to DIY tutorials and vlogs. Users can subscribe to channels, interact through comments, and explore curated playlists.",
+            googlemaps: "Google Maps is a navigation and mapping platform that allows users to explore the world. It provides accurate directions, real-time traffic updates, street views, and local business information. Whether you're planning a trip or finding nearby restaurants, Google Maps is your ultimate guide."
+        };
+
+        const cards = document.querySelectorAll('.card');
+        const modal = document.querySelector('.modal');
+        const overlay = document.querySelector('.overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const app = card.getAttribute('data-app');
+                modalTitle.textContent = app.charAt(0).toUpperCase() + app.slice(1);
+                modalDescription.textContent = descriptions[app];
+                modal.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
